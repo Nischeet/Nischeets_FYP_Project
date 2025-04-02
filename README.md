@@ -1,2 +1,2 @@
-# Nischeets_FYp_Project
+# Nischeets_FYP_Project
 Fore college work
