@@ -1,1 +1,230 @@
-hellow 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nepal Craft VR Prototype</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Open+Sans&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --saffron: #FF9933;
+            --deep-green: #1A3C34;
+        }
+
+        body {
+            font-family: 'Open Sans', sans-serif;
+            margin: 0;
+            scroll-behavior: smooth;
+        }
+
+        /* Navigation */
+        nav {
+            background: white;
+            padding: 1rem;
+            position: sticky;
+            top: 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        nav button {
+            margin: 0 10px;
+            padding: 10px 20px;
+            background: var(--saffron);
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+        }
+
+        /* Product Cards */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            padding: 2rem;
+        }
+
+        .product-card {
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 1rem;
+            transition: transform 0.3s;
+            cursor: pointer;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+        }
+
+        /* VR Demo Section */
+        .vr-demo {
+            height: 400px;
+            background: #f5f5f5;
+            margin: 2rem;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        /* Blockchain Popup */
+        .blockchain-popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.2);
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <button onclick="showSection('home')">Home</button>
+        <button onclick="showSection('products')">Products</button>
+        <button onclick="showSection('quiz')">Craft Quiz</button>
+    </nav>
+
+    <!-- Home Section -->
+    <section id="home" class="hero" style="display: block;">
+        <div style="text-align: center; padding: 4rem;">
+            <h1 style="font-family: 'Playfair Display'; color: var(--deep-green);">
+                🏔️ Nepal Craft VR
+            </h1>
+            <p style="font-size: 1.2rem;">Experience Traditional Crafts in Virtual Reality</p>
+            <div class="vr-demo">
+                [VR Workshop Preview]<br>
+                <button onclick="showSection('vr-marketplace')">Enter VR</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Product Marketplace -->
+    <section id="products" style="display: none; padding: 2rem;">
+        <h2>Featured Crafts</h2>
+        <div class="product-grid">
+            <div class="product-card" onclick="showProductDetail('khukuri')">
+                <img src="https://via.placeholder.com/200x150" alt="Khukuri">
+                <h3>Handmade Khukuri</h3>
+                <p>Traditional Nepali knife</p>
+            </div>
+            <div class="product-card" onclick="showProductDetail('thangka')">
+                <img src="https://via.placeholder.com/200x150" alt="Thangka">
+                <h3>Thangka Painting</h3>
+                <p>Sacred Buddhist art</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Product Detail Page -->
+    <div id="product-detail" style="display: none; padding: 2rem;">
+        <button onclick="showSection('products')">← Back</button>
+        <h2 id="product-title"></h2>
+        <div style="display: flex; gap: 2rem; margin-top: 2rem;">
+            <img src="https://via.placeholder.com/300x200" alt="Product">
+            <div>
+                <p id="product-description"></p>
+                <button onclick="showBlockchain()">Verify Authenticity</button>
+                <button onclick="showSection('customizer')">Customize</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Blockchain Verification Popup -->
+    <div class="blockchain-popup" id="blockchain-popup">
+        <h3>🔗 Blockchain Verification</h3>
+        <p>Artisan: Kumar Thapa</p>
+        <p>Location: Palpa, Nepal</p>
+        <p>Materials: Local steel, wood</p>
+        <button onclick="document.getElementById('blockchain-popup').style.display = 'none'">Close</button>
+    </div>
+
+    <!-- Craft Quiz -->
+    <section id="quiz" style="display: none; padding: 2rem;">
+        <h2>Find Your Perfect Craft</h2>
+        <div style="text-align: center;">
+            <div id="quiz-questions" style="margin: 2rem 0;"></div>
+            <button onclick="showResult()">Get Results</button>
+            <p id="quiz-result" style="margin-top: 1rem;"></p>
+        </div>
+    </section>
+
+    <!-- 3D Customizer -->
+    <section id="customizer" style="display: none; padding: 2rem;">
+        <h2>Design Your Product</h2>
+        <div style="border: 2px solid #ddd; padding: 1rem; margin: 1rem 0;">
+            [3D Customizer Preview]<br>
+            <button onclick="showSection('products')">Save Design</button>
+        </div>
+    </section>
+
+    <script>
+        // Navigation System
+        function showSection(sectionId) {
+            document.querySelectorAll('section, #product-detail').forEach(el => {
+                el.style.display = 'none';
+            });
+            document.getElementById(sectionId).style.display = 'block';
+        }
+
+        // Product Details
+        const products = {
+            khukuri: {
+                title: "Hand-Forged Khukuri",
+                description: "Traditional Nepali knife made by master artisans..."
+            },
+            thangka: {
+                title: "Thangka Painting",
+                description: "Sacred Buddhist artwork using natural pigments..."
+            }
+        };
+
+        function showProductDetail(productId) {
+            showSection('product-detail');
+            document.getElementById('product-title').textContent = products[productId].title;
+            document.getElementById('product-description').textContent = products[productId].description;
+        }
+
+        // Blockchain Popup
+        function showBlockchain() {
+            document.getElementById('blockchain-popup').style.display = 'block';
+        }
+
+        // Quiz System
+        const quizQuestions = [
+            {
+                question: "Choose your favorite landscape:",
+                options: ["🏔️ Mountains", "🌳 Forests", "🛕 Temples"]
+            },
+            {
+                question: "Preferred design style:",
+                options: ["🎨 Colorful", "✨ Detailed", "🌱 Natural"]
+            }
+        ];
+
+        let quizAnswers = [];
+        document.getElementById('quiz-questions').innerHTML = quizQuestions.map((q, i) => `
+            <div style="margin: 1rem 0;">
+                <p>${q.question}</p>
+                ${q.options.map(opt => `
+                    <button style="margin: 5px;" onclick="quizAnswers[${i}] = '${opt}'; this.style.background='#FF9933'">${opt}</button>
+                `).join('')}
+            </div>
+        `).join('');
+
+        function showResult() {
+            const result = quizAnswers.includes("🏔️ Mountains") ? "Khukuri Knife" : "Thangka Painting";
+            document.getElementById('quiz-result').innerHTML = `
+                Your perfect craft: <strong>${result}</strong><br>
+                <button onclick="showProductDetail('${result.toLowerCase().split(' ')[0]}')">View Product</button>
+            `;
+        }
+
+        // Initialize with Home section
+        showSection('home');
+    </script>
+</body>
+</html> 
