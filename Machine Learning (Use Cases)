@@ -1,0 +1,34 @@
+1. Spam Email Filter
+How it works:
+ML algorithms learn to detect spam by analyzing thousands of emails (e.g., words like "FREE" or suspicious links). Over time, it automatically flags junk emails and keeps your inbox clean.
+
+Example:
+Gmail uses ML to block spam before it reaches you!
+
+2. Movie/Music Recommendations
+How it works:
+ML studies what you watch/listen to and suggests similar content. If you love action movies, Netflix/Spotify will recommend more action-packed films or playlists.
+
+Example:
+YouTube’s "Recommended for You" section is powered by ML.
+
+3. Facial Recognition in Photos
+How it works:
+ML scans faces in photos and matches them to people you’ve tagged before. It learns patterns like face shape, eyes, or hairstyle.
+
+Example:
+Your phone’s photo gallery uses this to auto-tag friends and family.
+
+4. Predicting House Prices
+How it works:
+ML analyzes past house sales (size, location, bedrooms) to predict prices of new houses. The more data it gets, the better the predictions.
+
+Example:
+Real estate websites like Zillow use ML for price estimates.
+
+5. Voice Assistants (Siri/Alexa)
+How it works:
+ML converts your voice commands into text, understands what you’re asking, and responds. It learns accents and slang over time.
+
+Example:
+When you ask, “Hey Siri, what’s the weather?”, ML helps answer!
